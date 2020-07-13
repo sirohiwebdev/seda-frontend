@@ -1,0 +1,97 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<TextAreaInput /> should render character counter correctly 1`] = `
+<div
+  className="text-area-input"
+>
+  <div
+    className="mode_input text rij_verplicht"
+  >
+    <Label
+      as="label"
+      className=""
+      htmlFor="formname"
+      isGroupHeader={false}
+    >
+      display
+    </Label>
+    <div
+      className="text-area-input__control"
+    >
+      <ForwardRef
+        data-testid="name"
+        helpText="0/300 tekens"
+        id="formname"
+        name="name"
+        placeholder="placeholder"
+        rows={2}
+        value=""
+      />
+    </div>
+  </div>
+</div>
+`;
+
+exports[`<TextAreaInput /> should render character counter with value correctly 1`] = `
+<div
+  className="text-area-input"
+>
+  <div
+    className="mode_input text rij_verplicht"
+  >
+    <Label
+      as="label"
+      className=""
+      htmlFor="formname"
+      isGroupHeader={false}
+    >
+      display
+    </Label>
+    <div
+      className="text-area-input__control"
+    >
+      <ForwardRef
+        data-testid="name"
+        helpText="4/300 tekens"
+        id="formname"
+        name="name"
+        placeholder="placeholder"
+        rows={2}
+        value=""
+      />
+    </div>
+  </div>
+</div>
+`;
+
+exports[`<TextAreaInput /> should render correctly 1`] = `
+<div
+  className="text-area-input"
+>
+  <div
+    className="mode_input text rij_verplicht"
+  >
+    <Label
+      as="label"
+      className=""
+      htmlFor="formname"
+      isGroupHeader={false}
+    >
+      display
+    </Label>
+    <div
+      className="text-area-input__control"
+    >
+      <ForwardRef
+        data-testid="name"
+        helpText={false}
+        id="formname"
+        name="name"
+        placeholder="placeholder"
+        rows={2}
+        value=""
+      />
+    </div>
+  </div>
+</div>
+`;

@@ -1,0 +1,21 @@
+.incident-container__alert {
+  color: white;
+  background-color: #ec0000;
+  line-height: 22px;
+  display: block;
+  padding: 10px;
+  width: 100%;
+
+  a {
+    color: white;
+    text-decoration: underline;
+
+    &:hover {
+      color: white;
+    }
+  }
+}
+
+.incident-wizard {
+  width: 100%;
+}
