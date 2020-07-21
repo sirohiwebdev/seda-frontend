@@ -4,6 +4,7 @@ import Leaflet from 'leaflet';
 
 import { useMapInstance } from '@datapunt/react-maps';
 import configuration from 'shared/services/configuration/configuration';
+console.log(configuration.default);
 
 const locationDotOptions = {
   fillColor: '#009de6',
