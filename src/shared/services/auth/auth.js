@@ -155,12 +155,14 @@ export function login(domain) {
   localStorage.setItem(NONCE_KEY, nonce);
   localStorage.setItem(OAUTH_DOMAIN_KEY, domain);
 
-  const encodedClientId = CONFIGURATION.OIDC_CLIENT_ID;
-  const encodedResponseType = CONFIGURATION.OIDC_RESPONSE_TYPE;
+  const encodedClientId = encodeURIComponent(CONFIGURATION.OIDC_CLIENT_ID);
+  const encodedResponseType = encodeURIComponent(CONFIGURATION.OIDC_RESPONSE_TYPE);
   const encodedScope = CONFIGURATION.OIDC_SCOPE;
-  const encodedStateToken = stateToken;
-  const encodedNonce = nonce;
-  const encodedRedirectUri = `${global.location.protocol}//${global.location.host}/manage/incidents`;
+  const encodedStateToken = encodeURIComponent(stateToken);
+  const encodedNonce = encodeURIComponent(nonce);
+  const encodedRedirectUri = encodeURIComponent(
+    `${global.location.protocol}//${global.location.host}/manage/incidents`
+  );
   const encodedDomain = encodeURIComponent(getDomain(domain));
 
   global.location.assign(
@@ -170,7 +172,8 @@ export function login(domain) {
       `&scope=${encodedScope}` +
       `&state=${encodedStateToken}` +
       `&nonce=${encodedNonce}` +
-      `&redirect_uri=${encodedRedirectUri}`
+      `&redirect_uri=${encodedRedirectUri}` +
+      `&domain=${encodedDomain}`
   );
 }
 
