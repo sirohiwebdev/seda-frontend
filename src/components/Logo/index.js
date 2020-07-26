@@ -6,9 +6,9 @@ import styled from 'styled-components';
 import configuration from 'shared/services/configuration/configuration';
 
 const StyledLogo = styled.img`
-  width: ${({ tall }) => tall ? configuration.logo.width : configuration.logo.smallWidth};
-  height: ${({ tall }) => tall ? configuration.logo.height : configuration.logo.smallHeight};
-  max-height: ${({ tall }) => tall ? '56px' : '32px'};
+  width: ${({ tall }) => (tall ? configuration.logo.width : configuration.logo.smallWidth)};
+  height: ${({ tall }) => (tall ? configuration.logo.height : configuration.logo.smallHeight)};
+  max-height: ${({ tall }) => (tall ? '56px' : '32px')};
 `;
 
 export const Logo = ({ tall, ...props }) => (

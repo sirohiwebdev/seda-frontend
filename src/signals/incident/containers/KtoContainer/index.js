@@ -12,9 +12,7 @@ import makeSelectKtoContainer from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 
-import {
-  updateKto, requestKtoAnswers, checkKto, storeKto,
-} from './actions';
+import { updateKto, requestKtoAnswers, checkKto, storeKto } from './actions';
 import KtoForm from './components/KtoForm';
 
 export const headerStrings = {
@@ -45,10 +43,7 @@ const renderHeader = type => {
       return (
         <header>
           <h1>{headerStrings.tooLate}</h1>
-          <p>
-            Na het afhandelend van uw melding heeft u 2 weken de gelegenheid om
-            feedback te geven.
-          </p>
+          <p>Na het afhandelend van uw melding heeft u 2 weken de gelegenheid om feedback te geven.</p>
         </header>
       );
 
@@ -56,10 +51,7 @@ const renderHeader = type => {
       return (
         <header>
           <h1>{headerStrings.filledOut}</h1>
-          <p>
-            Nogmaals bedankt voor uw feedback. We zijn voortdurend bezig onze
-            dienstverlening te verbeteren.
-          </p>
+          <p>Nogmaals bedankt voor uw feedback. We zijn voortdurend bezig onze dienstverlening te verbeteren.</p>
         </header>
       );
     default:
@@ -109,14 +101,14 @@ export const KtoContainerComponent = ({
       <Row>
         <Column
           span={{
-            small: 2, medium: 2, big: 8, large: 8, xLarge: 8,
+            small: 2,
+            medium: 2,
+            big: 8,
+            large: 8,
+            xLarge: 8,
           }}
         >
-          <KtoForm
-            ktoContainer={ktoContainer}
-            onUpdateKto={onUpdateKto}
-            onStoreKto={onStoreKto}
-          />
+          <KtoForm ktoContainer={ktoContainer} onUpdateKto={onUpdateKto} onStoreKto={onStoreKto} />
         </Column>
       </Row>
     </Fragment>
@@ -148,27 +140,20 @@ const mapStateToProps = createStructuredSelector({
   ktoContainer: makeSelectKtoContainer(),
 });
 
-export const mapDispatchToProps = dispatch => bindActionCreators(
-  {
-    onUpdateKto: updateKto,
-    onStoreKto: storeKto,
-    requestKtoAnswersAction: requestKtoAnswers,
-    checkKtoAction: checkKto,
-  },
-  dispatch,
-);
+export const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      onUpdateKto: updateKto,
+      onStoreKto: storeKto,
+      requestKtoAnswersAction: requestKtoAnswers,
+      checkKtoAction: checkKto,
+    },
+    dispatch
+  );
 
-const withConnect = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-);
+const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
 const withReducer = injectReducer({ key: 'ktoContainer', reducer });
 const withSaga = injectSaga({ key: 'ktoContainer', saga });
 
-export default compose(
-  withReducer,
-  withSaga,
-  withConnect,
-  withRouter,
-)(KtoContainerComponent);
+export default compose(withReducer, withSaga, withConnect, withRouter)(KtoContainerComponent);
