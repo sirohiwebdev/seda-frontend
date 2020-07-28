@@ -51,6 +51,8 @@ export const getConfig = defaultConfig => {
 
 const ThemeProvider = ({ children }) => {
   const { theme } = configuration;
+
+  console.log(getConfig(theme));
   return (
     <ASCThemeProvider overrides={getConfig(theme)}>
       <Fragment>

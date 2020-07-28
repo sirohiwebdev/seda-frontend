@@ -30,18 +30,18 @@ const FooterContainer = styled.div`
   margin: 0 auto;
   background-color: #ffffff;
   width: 100%;
-  max-width: 1400px;
+  max-width: 100vw;
 `;
 
 const ContentContainer = styled.div`
   background-color: #ffffff;
   flex: 1 0 auto;
   margin: 0 auto;
-  max-width: 1400px;
+  max-width: 100vw;
   padding-bottom: 20px;
   width: 100%;
   z-index: 0;
-  padding-top: ${({ headerIsTall }) => !headerIsTall && 50}px;
+  padding-top: ${({ headerIsTall }) => (headerIsTall ? 50 : 50)}px;
 `;
 
 export const AppContainer = ({ resetIncidentAction }) => {
@@ -79,9 +79,9 @@ export const AppContainer = ({ resetIncidentAction }) => {
           <Switch>
             {/* <Redirect exact from="/" to="/incident/beschrijf" /> */}
             <Redirect exact from="/login" to="/manage" />
-            <Redirect exact from="/manage" to="/manage/incidents" />
+            <Redirect exact from="/" to="/manage/incidents" />
             <Route path="/manage" component={IncidentManagementModule} />
-            <Route path="/" exact component={SplashScreen} />
+            {/* <Route path="/" exact component={SplashScreen} /> */}
             <Route path="/instellingen" component={SettingsModule} />
             <Route path="/incident" component={IncidentContainer} />
             <Route path="/kto/:yesNo/:uuid" component={KtoContainer} />

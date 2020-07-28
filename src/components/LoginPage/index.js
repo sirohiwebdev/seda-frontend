@@ -8,7 +8,7 @@ import Button from 'components/Button';
 import ButtonBar from 'components/ButtonBar';
 
 const Notification = styled.div`
-  border-left: 3px solid ${themeColor('secondary')};
+  border-left: 3px solid ${themeColor('success')};
   margin: ${themeSpacing(6)} 0;
   padding-left: ${themeSpacing(5)};
 `;
@@ -21,17 +21,17 @@ const LoginPage = () => (
 
         <ButtonBar>
           <Button
-            variant="secondary"
+            variant="primary"
             onClick={() => {
               login('datapunt');
             }}
             type="button"
           >
-            <span className="value">Inloggen</span>
+            <span className="value">InLoggen</span>
           </Button>
 
           <Button
-            variant="secondary"
+            variant="primary"
             onClick={() => {
               login('grip');
             }}

@@ -97,7 +97,7 @@ const HeaderWrapper = styled.div`
   position: relative;
 
   #header {
-    max-width: 1400px;
+    max-width: 100vw;
     z-index: 2;
   }
 
@@ -137,7 +137,7 @@ const HeaderWrapper = styled.div`
           z-index: 0;
           box-shadow: none;
           &:after {
-            max-width: 1400px;
+            max-width: 100vw;
             margin-left: auto;
             margin-right: auto;
             content: '';

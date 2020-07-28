@@ -34,7 +34,7 @@ const StyledHeading = styled(Heading)`
 `;
 
 const FooterWrapper = styled.div`
-  background-color: ${themeColor('tint', 'level5')};
+  background-color: ${themeColor('secondary', 'dark')};
   width: 100%;
   margin-top: 50px;
   color: ${themeColor('bright', 'main')};

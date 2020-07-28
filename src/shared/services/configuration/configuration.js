@@ -39,10 +39,21 @@ const applicationConfig = {
   },
   links: {
     help: 'https://tamtam.amsterdam.nl/do/office?id=1723860-6f6666696365',
-    home: 'https://www.amsterdam.nl',
+    home: 'http://localhost:3001',
     privacy: 'https://www.amsterdam.nl/privacy/specifieke/privacyverklaringen-wonen/meldingen-overlast-privacy/',
   },
-  theme: {},
+  theme: {
+    colors: {
+      primary: {
+        main: '#1D6B34',
+        dark: '#155429',
+      },
+      secondary: {
+        main: '#B38000',
+        dark: '#CCA000',
+      },
+    },
+  },
   map: {
     municipality: 'amsterdam',
     options: {
