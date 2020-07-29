@@ -44,17 +44,12 @@ export const CategoriesOverviewContainer = ({ subCategories, userCan }) => {
   const pageNum = params.pageNum && parseInt(params.pageNum, 10);
   const count = subCategories && subCategories.length;
   const sliceStart = (pageNum - 1) * PAGE_SIZE;
-  const pagedData = (subCategories || [])
-    .slice(sliceStart, sliceStart + PAGE_SIZE)
-    .map(category => ({
-      ...category,
-      sla: `${category.sla.n_days} ${
-        !category.sla.use_calendar_days ? 'werk' : ''
-      }dagen`,
-    }));
+  const pagedData = (subCategories || []).slice(sliceStart, sliceStart + PAGE_SIZE).map(category => ({
+    ...category,
+    sla: `${category.sla.n_days} ${!category.sla.use_calendar_days ? 'werk' : ''}dagen`,
+  }));
   const data = filterData(pagedData, colMap);
   const isLoading = !subCategories;
-
 
   // subscribe to param changes
   useEffect(() => {
@@ -91,7 +86,7 @@ export const CategoriesOverviewContainer = ({ subCategories, userCan }) => {
     [history]
   );
 
-  const columnHeaders = ['Categorie', 'Service Level Agreement', 'Status'];
+  const columnHeaders = ['Categorie', 'Categorie', 'Categorie', 'Categorie', 'Service Level Agreement', 'Status'];
 
   return (
     <Fragment>

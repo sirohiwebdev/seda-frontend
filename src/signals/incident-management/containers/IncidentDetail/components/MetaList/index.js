@@ -135,32 +135,139 @@ const MetaList = ({ incident, onEditStatus }) => {
           />
         </Highlight>
       )}
-
-      {subcategoryOptions && (
-        <Highlight subscribeTo={incident.category.sub_slug} valueChanged={valueChanged}>
-          <ChangeValue
-            disabled={subcatHighlightDisabled}
-            display="Subcategorie"
-            list={subcategoryOptions}
-            incident={incident}
-            infoKey="description"
-            onPatchIncident={patchIncident}
-            patch={{ status: { state: 'm' } }}
-            path="category.sub_category"
-            sort
-            type="subcategory"
-            valuePath="category.category_url"
-          />
-        </Highlight>
-      )}
-
-      <Highlight subscribeTo={incident.category.main_slug} valueChanged={valueChanged}>
-        <dt data-testid="meta-list-main-category-definition">Hoofdcategorie</dt>
-        <dd data-testid="meta-list-main-category-value">{incident.category.main}</dd>
-      </Highlight>
-
       <dt data-testid="meta-list-source-definition">Bron</dt>
       <dd data-testid="meta-list-source-value">{incident.source}</dd>
+      <Highlight subscribeTo={incident.category.main_slug} valueChanged={valueChanged}>
+        <h3>Categories (Image)</h3>
+        {/* <dt data-testid="meta-list-main-category-definition">Category 1 </dt>
+        <dd data-testid="meta-list-main-category-value">{incident.category.main}</dd> */}
+      </Highlight>
+      <Highlight subscribeTo={incident.category.sub_slug} valueChanged={valueChanged}>
+        <ChangeValue
+          disabled={subcatHighlightDisabled}
+          display="Category 1"
+          list={subcategoryOptions}
+          incident={incident}
+          infoKey="description"
+          onPatchIncident={patchIncident}
+          patch={{ status: { state: 'm' } }}
+          path="category.sub_category"
+          sort
+          type="subcategory"
+          valuePath="category.category_url"
+        />
+      </Highlight>
+      <Highlight subscribeTo={incident.category.sub_slug} valueChanged={valueChanged}>
+        <ChangeValue
+          disabled={subcatHighlightDisabled}
+          display="Category 2"
+          list={subcategoryOptions}
+          incident={incident}
+          infoKey="description"
+          onPatchIncident={patchIncident}
+          patch={{ status: { state: 'm' } }}
+          path="category.sub_category"
+          sort
+          type="subcategory"
+          valuePath="category.category_url"
+        />
+      </Highlight>
+      <Highlight subscribeTo={incident.category.sub_slug} valueChanged={valueChanged}>
+        <ChangeValue
+          disabled={subcatHighlightDisabled}
+          display="Category 3"
+          list={subcategoryOptions}
+          incident={incident}
+          infoKey="description"
+          onPatchIncident={patchIncident}
+          patch={{ status: { state: 'm' } }}
+          path="category.sub_category"
+          sort
+          type="subcategory"
+          valuePath="category.category_url"
+        />
+      </Highlight>
+      <Highlight subscribeTo={incident.category.sub_slug} valueChanged={valueChanged}>
+        <ChangeValue
+          disabled={subcatHighlightDisabled}
+          display="Category 4"
+          list={subcategoryOptions}
+          incident={incident}
+          infoKey="description"
+          onPatchIncident={patchIncident}
+          patch={{ status: { state: 'm' } }}
+          path="category.sub_category"
+          sort
+          type="subcategory"
+          valuePath="category.category_url"
+        />
+      </Highlight>
+
+      {subcategoryOptions && (
+        <>
+          <Highlight subscribeTo={incident.category.sub_slug} valueChanged={valueChanged}>
+            <h3>Categories (Text)</h3>
+            <ChangeValue
+              disabled={subcatHighlightDisabled}
+              display="Category 1"
+              list={subcategoryOptions}
+              incident={incident}
+              infoKey="description"
+              onPatchIncident={patchIncident}
+              patch={{ status: { state: 'm' } }}
+              path="category.sub_category"
+              sort
+              type="subcategory"
+              valuePath="category.category_url"
+            />
+          </Highlight>
+          <Highlight subscribeTo={incident.category.sub_slug} valueChanged={valueChanged}>
+            <ChangeValue
+              disabled={subcatHighlightDisabled}
+              display="Category 2"
+              list={subcategoryOptions}
+              incident={incident}
+              infoKey="description"
+              onPatchIncident={patchIncident}
+              patch={{ status: { state: 'm' } }}
+              path="category.sub_category"
+              sort
+              type="subcategory"
+              valuePath="category.category_url"
+            />
+          </Highlight>
+          <Highlight subscribeTo={incident.category.sub_slug} valueChanged={valueChanged}>
+            <ChangeValue
+              disabled={subcatHighlightDisabled}
+              display="Category 3"
+              list={subcategoryOptions}
+              incident={incident}
+              infoKey="description"
+              onPatchIncident={patchIncident}
+              patch={{ status: { state: 'm' } }}
+              path="category.sub_category"
+              sort
+              type="subcategory"
+              valuePath="category.category_url"
+            />
+          </Highlight>
+          <Highlight subscribeTo={incident.category.sub_slug} valueChanged={valueChanged}>
+            <ChangeValue
+              disabled={subcatHighlightDisabled}
+              display="Category 4"
+              list={subcategoryOptions}
+              incident={incident}
+              infoKey="description"
+              onPatchIncident={patchIncident}
+              patch={{ status: { state: 'm' } }}
+              path="category.sub_category"
+              sort
+              type="subcategory"
+              valuePath="category.category_url"
+            />
+          </Highlight>
+        </>
+      )}
     </List>
   );
 };

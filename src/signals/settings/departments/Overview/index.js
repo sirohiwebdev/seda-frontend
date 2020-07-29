@@ -41,7 +41,11 @@ const DepartmentOverview = () => {
         return;
       }
 
-      const { currentTarget: { dataset: { itemId } } } = event;
+      const {
+        currentTarget: {
+          dataset: { itemId },
+        },
+      } = event;
 
       if (itemId) {
         history.push(`${DEPARTMENT_URL}/${itemId}`);
@@ -54,9 +58,7 @@ const DepartmentOverview = () => {
 
   return (
     <Fragment>
-      <PageHeader
-        title={`Afdelingen${departments.count ? ` (${departments.count})` : ''}`}
-      />
+      <PageHeader title={`Afdelingen${departments.count ? ` (${departments.count})` : ''}`} />
 
       <Row>
         {departments.loading && <LoadingIndicator />}
@@ -64,7 +66,7 @@ const DepartmentOverview = () => {
         <Column span={12}>
           {!departments.loading && data && (
             <StyledList
-              columnOrder={['Naam', 'Categorie']}
+              columnOrder={['Naam', 'Categorie', 'Categorie', 'Categorie', 'Categorie']}
               items={data}
               onItemClick={onItemClick}
               primaryKeyColumn="id"

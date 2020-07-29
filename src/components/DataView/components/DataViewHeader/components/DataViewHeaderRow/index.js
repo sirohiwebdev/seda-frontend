@@ -11,10 +11,9 @@ const DataViewHeaderRow = ({ nodes, testId, spacer }) => (
         {node}
       </StyledTH>
     ))}
-    {spacer > 0 && <StyledTH colSpan={spacer > 1 ? spacer : undefined} />}
+    {/* {spacer > 0 && <StyledTH colSpan={spacer > 1 ? spacer : undefined} />} */}
   </StyledTR>
 );
-
 
 DataViewHeaderRow.defaultProps = {
   testId: 'dataViewHeaderRow',
