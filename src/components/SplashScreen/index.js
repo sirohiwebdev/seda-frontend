@@ -2,6 +2,7 @@ import React from 'react';
 import { Row, Column, Heading } from '@datapunt/asc-ui';
 import styled from 'styled-components';
 import Button from 'components/Button';
+import { Link } from 'react-router-dom';
 
 const StyledContainer = styled.div`
   display: flex;
@@ -22,9 +23,11 @@ const SplashScreen = () => {
           </Heading>
           <h3>Manage the actions of your city.</h3>
 
-          <Button variant="secondary" style={{ marginTop: '1rem' }}>
-            Explore Now
-          </Button>
+          <Link to={'/manage'}>
+            <Button variant="secondary" style={{ marginTop: '1rem' }}>
+              Explore Now
+            </Button>
+          </Link>
         </StyledContainer>
       </Column>
     </Row>
