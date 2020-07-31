@@ -79,9 +79,9 @@ export const AppContainer = ({ resetIncidentAction }) => {
           <Switch>
             {/* <Redirect exact from="/" to="/incident/beschrijf" /> */}
             <Redirect exact from="/login" to="/manage" />
-            <Redirect exact from="/" to="/manage/incidents" />
+            {/* <Redirect exact from="/" to="/manage/incidents" /> */}
             <Route path="/manage" component={IncidentManagementModule} />
-            {/* <Route path="/" exact component={SplashScreen} /> */}
+            <Route path="/" exact component={SplashScreen} />
             <Route path="/instellingen" component={SettingsModule} />
             <Route path="/incident" component={IncidentContainer} />
             <Route path="/kto/:yesNo/:uuid" component={KtoContainer} />

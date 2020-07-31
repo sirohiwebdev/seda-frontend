@@ -122,6 +122,9 @@ const MetaList = ({ incident, onEditStatus }) => {
         </Highlight>
       )}
 
+      <dt data-testid="meta-list-scdate-definition">Scheduled DateTime</dt>
+      <dd data-testid="meta-list-scdate-value">{new Date().toUTCString()}</dd>
+
       {incident.type && (
         <Highlight subscribeTo={incident.type.code} valueChanged={valueChanged}>
           <ChangeValue
