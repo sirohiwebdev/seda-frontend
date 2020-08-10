@@ -24,13 +24,13 @@ export const colMap = {
   value: 'Categorie',
   is_active: 'Status',
   sla: 'Service Level Agreement',
+  category_level_name1: 'Category Level 1',
+  category_level_name2: 'Category Level 2',
+  category_level_name3: 'Category Level 3',
+  category_level_name4: 'Category Level 4',
 };
 
-const StyledDataView = styled(DataView)`
-  th:first-child {
-    width: 50%;
-  }
-`;
+const StyledDataView = styled(DataView)``;
 
 const StyledPagination = styled(Pagination)`
   margin-top: ${themeSpacing(12)};
@@ -41,6 +41,8 @@ export const CategoriesOverviewContainer = ({ subCategories, userCan }) => {
   const params = useParams();
   const [page, setPage] = useState(1);
 
+  console.log('SUB', subCategories);
+
   const pageNum = params.pageNum && parseInt(params.pageNum, 10);
   const count = subCategories && subCategories.length;
   const sliceStart = (pageNum - 1) * PAGE_SIZE;
@@ -48,6 +50,9 @@ export const CategoriesOverviewContainer = ({ subCategories, userCan }) => {
     ...category,
     sla: `${category.sla.n_days} ${!category.sla.use_calendar_days ? 'werk' : ''}dagen`,
   }));
+
+  console.log('PAGED', pagedData);
+
   const data = filterData(pagedData, colMap);
   const isLoading = !subCategories;
 
@@ -86,7 +91,9 @@ export const CategoriesOverviewContainer = ({ subCategories, userCan }) => {
     [history]
   );
 
-  const columnHeaders = ['Categorie', 'Categorie', 'Categorie', 'Categorie', 'Service Level Agreement', 'Status'];
+  const columnHeaders = ['Category Level 1', 'Category Level 2', 'Category Level 3', 'Category Level 4', 'Status'];
+
+  console.log(data);
 
   return (
     <Fragment>

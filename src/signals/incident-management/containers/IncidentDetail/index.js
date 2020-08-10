@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { bindActionCreators } from 'redux';
+import { bindActionCreators, store } from 'redux';
 import isEqual from 'lodash.isequal';
 import { Row, Column } from '@datapunt/asc-ui';
 import styled from 'styled-components';
@@ -11,12 +11,7 @@ import { incidentType, dataListType, defaultTextsType, attachmentsType, historyT
 
 import LoadingIndicator from 'shared/components/LoadingIndicator';
 import { makeSelectLoading, makeSelectError } from 'containers/App/selectors';
-import {
-  requestIncident,
-  requestAttachments,
-  requestDefaultTexts,
-  dismissError,
-} from 'models/incident/actions';
+import { requestIncident, requestAttachments, requestDefaultTexts, dismissError } from 'models/incident/actions';
 import { requestHistoryList } from 'models/history/actions';
 import makeSelectIncidentModel from 'models/incident/selectors';
 import makeSelectHistoryModel from 'models/history/selectors';
@@ -124,6 +119,7 @@ export class IncidentDetail extends React.Component {
   }
 
   render() {
+    console.log(this.props);
     const {
       match: {
         params: { id },
@@ -156,11 +152,7 @@ export class IncidentDetail extends React.Component {
               {incident && (
                 <Row>
                   <Column span={12}>
-                    <DetailHeader
-                      incidentId={incident.id}
-                      status={incident?.status?.state}
-                      links={incident?._links}
-                    />
+                    <DetailHeader incidentId={incident.id} status={incident?.status?.state} links={incident?._links} />
                   </Column>
                 </Row>
               )}
@@ -188,11 +180,7 @@ export class IncidentDetail extends React.Component {
                     )}
 
                     {previewState === 'editLocation' && (
-                      <LocationForm
-                        incidentId={incident.id}
-                        location={incident.location}
-                        onClose={this.onCloseAll}
-                      />
+                      <LocationForm incidentId={incident.id} location={incident.location} onClose={this.onCloseAll} />
                     )}
 
                     {previewState === 'editStatus' && (

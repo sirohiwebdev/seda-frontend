@@ -3,26 +3,21 @@
 // replacing the characters will affect filtering incidents, because the API does a
 // full-string match
 const sourceList = [
-  { key: 'Telefoon – Adoptant', value: 'Telefoon – Adoptant' },
-  { key: 'Telefoon – ASC', value: 'Telefoon – ASC' },
-  { key: 'Telefoon – CCA', value: 'Telefoon – CCA' },
-  { key: 'Telefoon – CCTR', value: 'Telefoon – CCTR' },
-  { key: 'Telefoon – Interswitch', value: 'Telefoon – Interswitch' },
-  { key: 'Telefoon – Stadsdeel', value: 'Telefoon – Stadsdeel' },
-  { key: 'E-mail – CCA', value: 'E-mail – CCA' },
-  { key: 'E-mail – ASC', value: 'E-mail – ASC' },
-  { key: 'E-mail – Stadsdeel', value: 'E-mail – Stadsdeel' },
-  { key: 'Webcare – CCA', value: 'Webcare – CCA' },
-  { key: 'Eigen organisatie', value: 'Eigen organisatie' },
-  { key: 'Fixi Weesp', value: 'Fixi Weesp' },
+  { key: 'Melding via webformulier op denhaag.nl', value: 'TMelding via webformulier op denhaag.nl' },
   {
-    key: 'Meldkamer burger/ondernemer',
-    value: 'Meldkamer burger/ondernemer',
+    key: 'Melding via e-mail / contactformulier op de website(Mailbox 14070)',
+    value: 'Melding via e-mail / contactformulier op de website(Mailbox 14070)',
   },
-  { key: 'Meldkamer Handhaver', value: 'Meldkamer Handhaver' },
-  { key: 'Meldkamer Politie', value: 'Meldkamer Politie' },
-  { key: 'VerbeterDeBuurt', value: 'VerbeterDeBuurt' },
-  { key: 'Waarnemingenapp', value: 'Waarnemingenapp' },
+  { key: 'Melding via telefoon(14070)', value: 'Melding via telefoon(14070)' },
+  { key: 'Melding via chat(14070)', value: 'Melding via chat(14070)' },
+  { key: 'Melding via app BuitenBeter', value: 'Melding via app BuitenBeter' },
+  { key: 'Melding via app VerbeterDeBuurt', value: 'Melding via app VerbeterDeBuurt' },
+  { key: 'Melding via app MyCleanCity', value: 'Melding via app MyCleanCity' },
+  { key: 'Melding via Social Media Facebook', value: 'Melding via Social Media Facebook' },
+  { key: 'Melding via Social Media Twitter', value: 'Melding via Social Media Twitter' },
+  { key: 'Melding via Buurt Interventie Team', value: 'Melding via Buurt Interventie Team' },
+  { key: 'Melding via Balie', value: 'Melding via Balie' },
+  { key: 'Anderen', value: 'Anderen' },
 ];
 
 export default sourceList;

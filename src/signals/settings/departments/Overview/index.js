@@ -17,16 +17,12 @@ const StyledList = styled(ListComponent)`
   th {
     font-weight: 400;
   }
-
-  th:first-child {
-    width: 250px;
-  }
 `;
 
 const colMap = {
   id: 'id',
   _display: 'Naam',
-  category_names: 'Categorie',
+  categories: 'categories',
 };
 
 const DepartmentOverview = () => {
@@ -66,7 +62,7 @@ const DepartmentOverview = () => {
         <Column span={12}>
           {!departments.loading && data && (
             <StyledList
-              columnOrder={['Naam', 'Categorie', 'Categorie', 'Categorie', 'Categorie']}
+              columnOrder={['Naam', 'Category Level 1', 'Category Level 2', 'Category Level 3', 'Category Level 4']}
               items={data}
               onItemClick={onItemClick}
               primaryKeyColumn="id"

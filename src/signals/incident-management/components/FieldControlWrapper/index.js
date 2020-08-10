@@ -3,12 +3,7 @@ import PropTypes from 'prop-types';
 import isEqual from 'lodash.isequal';
 import sortBy from 'lodash.sortby';
 import styled from 'styled-components';
-import {
-  FieldControl,
-  FormControl,
-  FormGroup,
-  FormArray,
-} from 'react-reactive-form';
+import { FieldControl, FormControl, FormGroup, FormArray } from 'react-reactive-form';
 
 const FieldControlContainer = styled.div`
   break-inside: avoid;
@@ -19,9 +14,7 @@ const formatValues = props => {
     return props.values;
   }
 
-  return props.sort
-    ? sortBy(props.values, item => item.value || item.name)
-    : props.values;
+  return props.sort ? sortBy(props.values, item => item.value || item.name) : props.values;
 };
 
 class FieldControlWrapper extends React.Component {
@@ -50,9 +43,9 @@ class FieldControlWrapper extends React.Component {
   }
 
   render() {
-    const {
-      name, control, render, meta, parent, ...props
-    } = this.props;
+    const { name, control, render, meta, parent, ...props } = this.props;
+
+    // console.log('v', this.state.values);
 
     return (
       <FieldControlContainer>

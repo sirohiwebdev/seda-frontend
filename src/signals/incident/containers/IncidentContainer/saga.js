@@ -57,8 +57,8 @@ export function* getQuestionsSaga(action) {
 export function* createIncident(action) {
   try {
     const { handling_message, ...postData } = yield call(getPostData, action);
-
-    const postResult = yield call(postIncident, postData);
+    const countryData = { country: { country_name: 'Netherland' }, city: { city_name: 'hague' } };
+    const postResult = yield call(postIncident, { ...postData, ...countryData });
 
     const incident = { ...postResult, handling_message };
 

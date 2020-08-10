@@ -10,24 +10,16 @@ const StyledTD = styled.td`
   cursor: pointer;
 `;
 
-const List = ({
-  columnOrder,
-  invisibleColumns,
-  items,
-  onItemClick,
-  primaryKeyColumn,
-  className,
-}) => {
+const List = ({ columnOrder, invisibleColumns, items, onItemClick, primaryKeyColumn, className }) => {
   if (!items.length) {
     return null;
   }
 
-  const filterVisibleColumns = colHeader =>
-    invisibleColumns.includes(colHeader) === false;
+  const filterVisibleColumns = colHeader => invisibleColumns.includes(colHeader) === false;
 
-  const colHeaders =
-    (columnOrder.length && columnOrder) ||
-    Object.keys(items[0]).filter(filterVisibleColumns);
+  const colHeaders = (columnOrder.length && columnOrder) || Object.keys(items[0]).filter(filterVisibleColumns);
+
+  const CategoryLabel = ['Category Level 1', 'Category Level 2', 'Category Level 3', 'Category Level 4'];
 
   return (
     <table cellPadding="0" cellSpacing="0" width="100%" className={className}>
@@ -46,9 +38,18 @@ const List = ({
             data-item-id={primaryKeyColumn && items[rowIndex][primaryKeyColumn]}
             onClick={onItemClick}
           >
-            {colHeaders.filter(filterVisibleColumns).map(col => (
-              // eslint-disable-next-line react/no-array-index-key
-              <StyledTD key={JSON.stringify(col)}>{row[col]}</StyledTD>
+            <StyledTD key={JSON.stringify(row['Naam'])}>{row['Naam']}</StyledTD>
+            {CategoryLabel.map((values, level) => (
+              <>
+                <StyledTD key={values.replace(' ', '-')}>
+                  {row['categories'].map((sub, index) => (
+                    <>
+                      <span>{sub[level] || 'Null'}</span>
+                      <br />
+                    </>
+                  ))}
+                </StyledTD>
+              </>
             ))}
           </tr>
         ))}

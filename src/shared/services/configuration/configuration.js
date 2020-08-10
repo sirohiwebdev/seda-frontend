@@ -38,7 +38,7 @@ const applicationConfig = {
     urgentContactInfo: 'Voor spoedeisende zaken kunt u ook telefonisch contact opnemen met 14 020.',
   },
   links: {
-    help: 'https://tamtam.amsterdam.nl/do/office?id=1723860-6f6666696365',
+    help: 'https://www.denhaag.nl/',
     home: 'http://localhost:3001',
     privacy: 'https://www.amsterdam.nl/privacy/specifieke/privacyverklaringen-wonen/meldingen-overlast-privacy/',
   },

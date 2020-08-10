@@ -3,14 +3,11 @@ import { createSelector } from 'reselect';
 
 import { initialState } from './reducer';
 
-export const selectCategoriesDomain = state =>
-  (state && state.get('categories')) || initialState;
+export const selectCategoriesDomain = state => (state && state.get('categories')) || initialState;
 
 const mappedSequence = results =>
   Seq(results)
-    .sort((a, b) =>
-      a.get('name').toLowerCase() > b.get('name').toLowerCase() ? 1 : -1
-    )
+    .sort((a, b) => (a.get('name').toLowerCase() > b.get('name').toLowerCase() ? 1 : -1))
     .map(category =>
       category
         .set('fk', category.get('id'))
@@ -19,8 +16,7 @@ const mappedSequence = results =>
         .set('value', category.get('name'))
         .set(
           'parentKey',
-          category.hasIn(['_links', 'sia:parent']) &&
-            category.getIn(['_links', 'sia:parent', 'public'])
+          category.hasIn(['_links', 'sia:parent']) && category.getIn(['_links', 'sia:parent', 'public'])
         )
     );
 
@@ -32,36 +28,30 @@ const mappedSequence = results =>
  *
  * @returns {IndexedIterable}
  */
-export const makeSelectCategories = createSelector(
-  selectCategoriesDomain,
-  state => {
-    const results = state.getIn(['categories', 'results']);
+export const makeSelectCategories = createSelector(selectCategoriesDomain, state => {
+  const results = state.getIn(['categories', 'results']);
 
-    if (!results) {
-      return null;
-    }
-
-    return mappedSequence(results).filter(category => category.get('is_active'));
+  if (!results) {
+    return null;
   }
-);
+
+  return mappedSequence(results).filter(category => category.get('is_active'));
+});
 
 /**
  * Alphabetically sorted list of all categories
  *
  * @returns {IndexedIterable}
  */
-export const makeSelectAllCategories = createSelector(
-  selectCategoriesDomain,
-  state => {
-    const results = state.getIn(['categories', 'results']);
+export const makeSelectAllCategories = createSelector(selectCategoriesDomain, state => {
+  const results = state.getIn(['categories', 'results']);
 
-    if (!results) {
-      return null;
-    }
-
-    return mappedSequence(results);
+  if (!results) {
+    return null;
   }
-);
+
+  return mappedSequence(results);
+});
 
 export const filterForMain = ({ _links }) => _links['sia:parent'] === undefined;
 
@@ -70,67 +60,70 @@ export const filterForMain = ({ _links }) => _links['sia:parent'] === undefined;
  *
  * @returns {Object[]}
  */
-export const makeSelectMainCategories = createSelector(
-  makeSelectCategories,
-  state => {
-    if (!state) {
-      return null;
-    }
-
-    const categories = state.filter(
-      category => category.getIn(['_links', 'sia:parent']) === undefined
-    );
-
-    return categories.toJS();
+export const makeSelectMainCategories = createSelector(makeSelectCategories, state => {
+  if (!state) {
+    return null;
   }
-);
+
+  const categories = state.filter(category => category.getIn(['_links', 'sia:parent']) === undefined);
+
+  return categories.toJS();
+});
 
 export const filterForSub = ({ _links }) => _links['sia:parent'] !== undefined;
 
-const getHasParent = state => state.filter(
-  category => category.getIn(['_links', 'sia:parent']) !== undefined
-);
+const getHasParent = state =>
+  state.filter(
+    // category => category.getIn(['_links', 'sia:parent']) !== undefined
+    category => true
+  );
 
 /**
  * Get all subcategories, sorted by name, excluding inactive subcategories
  *
  * @returns {Object[]}
  */
-export const makeSelectSubCategories = createSelector(
-  makeSelectCategories,
-  state => {
-    if (!state) {
-      return null;
+export const makeSelectSubCategories = createSelector(makeSelectCategories, state => {
+  if (!state) {
+    return null;
+  }
+
+  const subCategories = state.toJS();
+
+  return subCategories.map(subCategory => {
+    const responsibleDeptCodes = subCategory.departments
+      .filter(({ is_responsible }) => is_responsible)
+      .map(({ code }) => code);
+    let extendedName = subCategory.name;
+
+    if (subCategory.category_level_name2) {
+      extendedName += '-' + subCategory.category_level_name2;
+    }
+    if (subCategory.category_level_name3) {
+      extendedName += '-' + subCategory.category_level_name3;
+    }
+    if (subCategory.category_level_name4) {
+      extendedName += '-' + subCategory.category_level_name4;
     }
 
-    const subCategories = getHasParent(state).toJS();
-
-    return subCategories.map(subCategory => {
-      const responsibleDeptCodes = subCategory.departments.filter(({ is_responsible }) => is_responsible).map(({ code }) => code);
-      let extendedName = subCategory.name;
-
-      if (responsibleDeptCodes.length > 0) {
-        extendedName = `${subCategory.name} (${responsibleDeptCodes.join(', ')})`;
-      }
-
-      return {
-        ...subCategory,
-        extendedName,
-      };
-    });
-  }
-);
-
-export const makeSelectAllSubCategories = createSelector(
-  makeSelectAllCategories,
-  state => {
-    if (!state) {
-      return null;
+    if (responsibleDeptCodes.length > 0) {
+      extendedName += ` (${responsibleDeptCodes.join(', ')})`;
     }
 
-    return getHasParent(state).toJS();
+    return {
+      ...subCategory,
+      extendedName,
+    };
+  });
+});
+
+export const makeSelectAllSubCategories = createSelector(makeSelectAllCategories, state => {
+  if (!state) {
+    return null;
   }
-);
+
+  return getHasParent(state).toJS();
+});
 
 /**
  * Get all subcategories, sorted by name, that are children of another category
@@ -138,16 +131,13 @@ export const makeSelectAllSubCategories = createSelector(
  * @param {String} parentKey - Main category public identifier
  * @returns {Object[]}
  */
-export const makeSelectByMainCategory = createSelector(
-  makeSelectSubCategories,
-  state => parentKey => {
-    if (!state) {
-      return null;
-    }
-
-    return state.filter(category => category.parentKey === parentKey);
+export const makeSelectByMainCategory = createSelector(makeSelectSubCategories, state => parentKey => {
+  if (!state) {
+    return null;
   }
-);
+
+  return state.filter(category => category.parentKey === parentKey);
+});
 
 /**
  * Get all subcategories, grouped by main category. Both main and subcategories are sorted by name.

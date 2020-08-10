@@ -1,9 +1,20 @@
 import {
-  REQUEST_INCIDENT, REQUEST_INCIDENT_SUCCESS, REQUEST_INCIDENT_ERROR,
-  PATCH_INCIDENT, PATCH_INCIDENT_SUCCESS, PATCH_INCIDENT_ERROR,
+  REQUEST_INCIDENT,
+  REQUEST_INCIDENT_SUCCESS,
+  REQUEST_INCIDENT_ERROR,
+  PATCH_INCIDENT,
+  PATCH_INCIDENT_SUCCESS,
+  PATCH_INCIDENT_ERROR,
   DISMISS_ERROR,
-  REQUEST_ATTACHMENTS, REQUEST_ATTACHMENTS_SUCCESS, REQUEST_ATTACHMENTS_ERROR,
-  REQUEST_DEFAULT_TEXTS, REQUEST_DEFAULT_TEXTS_SUCCESS, REQUEST_DEFAULT_TEXTS_ERROR,
+  REQUEST_ATTACHMENTS,
+  REQUEST_ATTACHMENTS_SUCCESS,
+  REQUEST_ATTACHMENTS_ERROR,
+  REQUEST_DEFAULT_TEXTS,
+  REQUEST_DEFAULT_TEXTS_SUCCESS,
+  REQUEST_DEFAULT_TEXTS_ERROR,
+  REQUEST_INCIDENT_PLAN,
+  REQUEST_INCIDENT_PLAN_SUCCESS,
+  REQUEST_INCIDENT_PLAN_ERROR,
 } from './constants';
 
 export function requestIncident(id) {
@@ -92,6 +103,27 @@ export function requestDefaultTextsSuccess(payload) {
 export function requestDefaultTextsError(error) {
   return {
     type: REQUEST_DEFAULT_TEXTS_ERROR,
+    payload: error,
+  };
+}
+
+export function requestIncidentPlan(payload) {
+  return {
+    type: REQUEST_INCIDENT_PLAN,
+    payload: payload,
+  };
+}
+
+export function requestIncidentPlanSuccess(payload) {
+  return {
+    type: REQUEST_INCIDENT_PLAN_SUCCESS,
+    payload: payload,
+  };
+}
+
+export function requestIncidentPlanError(error) {
+  return {
+    type: REQUEST_INCIDENT_PLAN_SUCCESS,
     payload: error,
   };
 }

@@ -26,6 +26,9 @@ import {
   PATCH_TYPE_PRIORITY,
   PATCH_TYPE_THOR,
   PATCH_TYPE_LOCATION,
+  REQUEST_INCIDENT_PLAN,
+  REQUEST_INCIDENT_PLAN_SUCCESS,
+  REQUEST_INCIDENT_PLAN_ERROR,
 } from './constants';
 
 export const initialState = fromJS({
@@ -38,6 +41,7 @@ export const initialState = fromJS({
   loading: false,
   error: false,
   attachments: [],
+
   patching: {
     [PATCH_TYPE_NOTES]: false,
     [PATCH_TYPE_SUBCATEGORY]: false,
@@ -52,17 +56,10 @@ export const initialState = fromJS({
 function incidentModelReducer(state = initialState, action) {
   switch (action.type) {
     case REQUEST_INCIDENT:
-      return state
-        .set('loading', true)
-        .set('error', false)
-        .set('id', action.payload)
-        .set('incident', null);
+      return state.set('loading', true).set('error', false).set('id', action.payload).set('incident', null);
 
     case REQUEST_INCIDENT_SUCCESS:
-      return state
-        .set('incident', fromJS(action.payload))
-        .set('error', false)
-        .set('loading', false);
+      return state.set('incident', fromJS(action.payload)).set('error', false).set('loading', false);
 
     case REQUEST_INCIDENT_ERROR:
       return state.set('error', fromJS(action.payload)).set('loading', false);
