@@ -113,6 +113,8 @@ const UsersOverviewContainer = () => {
     [dispatch]
   );
 
+  console.log(data);
+
   const onItemClick = useCallback(
     event => {
       if (userCan('change_user') === false) {
@@ -141,7 +143,7 @@ const UsersOverviewContainer = () => {
     [history]
   );
 
-  const columnHeaders = ['Gebruikersnaam', 'Rol', 'Status'];
+  const columnHeaders = ['Gebruikersnaam', 'Departments', 'Rol', 'Status'];
 
   return (
     <Fragment>
@@ -174,6 +176,12 @@ const UsersOverviewContainer = () => {
 
                 <SelectInput
                   name="roleSelect"
+                  value={filters.role}
+                  options={selectRoles}
+                  onChange={selectRoleOnChange}
+                />,
+                <SelectInput
+                  name="deptSelect"
                   value={filters.role}
                   options={selectRoles}
                   onChange={selectRoleOnChange}

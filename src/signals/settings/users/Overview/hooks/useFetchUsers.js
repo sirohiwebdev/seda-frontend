@@ -12,6 +12,7 @@ const colMap = {
   is_active: 'Status',
   roles: 'Rol',
   username: 'Gebruikersnaam',
+  profile: 'Departments',
 };
 
 /**
@@ -39,9 +40,7 @@ const useFetchUsers = ({ page, filters } = {}) => {
         .filter(([, value]) => value !== '*')
         .reduce((acc, [filter, value]) => [...acc, `${filter}=${value}`], []);
 
-      const queryParams = [...pageParams, ...filterParams]
-        .filter(Boolean)
-        .join('&');
+      const queryParams = [...pageParams, ...filterParams].filter(Boolean).join('&');
 
       try {
         const url = [configuration.USERS_ENDPOINT, queryParams].join('?');
