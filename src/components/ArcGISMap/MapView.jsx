@@ -9,13 +9,27 @@ const options = {
   css: true,
 };
 
-export const WebMapView = props => {
+export const WebMapView = ({ data, isShowPopup = false }) => {
   const mapRef = useRef();
   const [location, setLocation] = useState(null);
-  const { points } = props;
+
+  console.log(data);
 
   useEffect(() => {
     // lazy load the required ArcGIS API for JavaScript modules and CSS
+
+    let points = data
+      ? data.features.map(p => {
+          return {
+            type: p.geometry.type.toLowerCase(),
+            longitude: p.geometry.coordinates[0],
+            latitude: p.geometry.coordinates[1],
+            id: p.properties.id,
+            created_at: p.properties.created_at,
+          };
+        })
+      : [];
+
     loadModules(
       [
         'esri/Map',
@@ -60,15 +74,15 @@ export const WebMapView = props => {
       //   },
       // });
 
-      const locateWidget = new Locate({
-        view: view, // Attaches the Locate button to the view
-        // graphic: new Graphic({
-        //   symbol: { type: 'simple-marker' }, // overwrites the default symbol used for the
-        //   // graphic placed at the location of the user when found
-        // }),
-      });
+      // const locateWidget = new Locate({
+      //   view: view, // Attaches the Locate button to the view
+      //   // graphic: new Graphic({
+      //   //   symbol: { type: 'simple-marker' }, // overwrites the default symbol used for the
+      //   //   // graphic placed at the location of the user when found
+      //   // }),
+      // });
 
-      console.log(locateWidget);
+      // console.log(locateWidget);
 
       const search = new Search({
         view: view,
@@ -76,7 +90,7 @@ export const WebMapView = props => {
       view.ui.add(search, 'top-left');
       view.ui.move('zoom', 'bottom-right');
       // view.ui.add('compass', 'top-left');
-      view.ui.add(locateWidget, 'bottom-right');
+      // view.ui.add(locateWidget, 'bottom-right');
 
       var graphicsLayer = new GraphicsLayer();
       map.add(graphicsLayer);
@@ -129,7 +143,6 @@ export const WebMapView = props => {
       });
 
       view.on('click', function (evt) {
-        console.log('AAA');
         search.clear();
         view.popup.clear();
         getAddressFromLocation(evt.mapPoint).then(address => {
@@ -158,13 +171,13 @@ export const WebMapView = props => {
           .map(key => `<strong>${key}</strong>: ${address[key]}`)
           .reduce((x, y) => x.concat('<br/>').concat(y), '');
 
-        console.log(content);
-        view.popup.open({
-          title: address.Address,
-          // title: +Math.round(pt.longitude * 100000) / 100000 + ',' + Math.round(pt.latitude * 100000) / 100000,
-          content,
-          location: pt,
-        });
+        isShowPopup &&
+          view.popup.open({
+            title: address.Address,
+            // title: +Math.round(pt.longitude * 100000) / 100000 + ',' + Math.round(pt.latitude * 100000) / 100000,
+            content,
+            location: pt,
+          });
       }
 
       function addPointToMap(points) {
@@ -177,7 +190,7 @@ export const WebMapView = props => {
 
           var simpleMarkerSymbol = {
             type: 'picture-marker',
-            url: 'map-marker.svg',
+            url: '/assets/map-marker.svg',
             width: '30px',
             height: '32px',
           };
@@ -201,7 +214,7 @@ export const WebMapView = props => {
       };
       //End Map Block
     });
-  }, [points]);
+  }, [data]);
 
   useEffect(() => {
     console.log(location);

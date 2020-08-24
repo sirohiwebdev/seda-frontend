@@ -22,6 +22,7 @@ import PDOKAutoSuggest from 'components/PDOKAutoSuggest';
 import MarkerCluster from './components/MarkerCluster';
 
 import DetailPanel from './components/DetailPanel';
+import { WebMapView } from 'components/ArcGISMap/MapView';
 
 const StyledViewerContainer = styled(ViewerContainer)`
   flex-direction: row;
@@ -196,7 +197,9 @@ const OverviewMap = ({ showPanelOnInit, ...rest }) => {
 
   return (
     <Wrapper {...rest}>
-      <StyledMap
+      <WebMapView onChange={() => {}} data={data} />
+
+      {/* <StyledMap
         data-testid="overviewMap"
         hasZoomControls
         mapOptions={{
@@ -218,7 +221,7 @@ const OverviewMap = ({ showPanelOnInit, ...rest }) => {
           }
           topRight={showPanel && <DetailPanel incidentId={incidentId} onClose={onClosePanel} />}
         />
-      </StyledMap>
+      </StyledMap> */}
     </Wrapper>
   );
 };
