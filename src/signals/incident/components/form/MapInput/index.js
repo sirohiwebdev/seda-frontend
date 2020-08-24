@@ -7,6 +7,7 @@ import MapContext from 'containers/MapContext';
 import MAP_OPTIONS from 'shared/services/configuration/map-options';
 import { formatMapLocation } from 'shared/services/map-location';
 import Header from '../Header';
+import { WebMapView } from 'components/ArcGISMap/MapView';
 
 const MapInput = ({ handler, touched, hasError, meta, parent, getError, validatorsOrOpts }) => {
   const value = formatMapLocation(handler().value || {});
@@ -18,17 +19,28 @@ const MapInput = ({ handler, touched, hasError, meta, parent, getError, validato
 
   // Can't use useCallback here, would break the rules of hooks
   const onLocationChange = location => {
+    console.log(location);
     parent.meta.updateIncident({ location });
   };
 
-  return meta?.isVisible && (
-    <Header className="mapInput" meta={meta} options={validatorsOrOpts} touched={touched} hasError={hasError} getError={getError}>
-      <div className="invoer">
-        <MapContext>
+  return (
+    meta?.isVisible && (
+      <Header
+        className="mapInput"
+        meta={meta}
+        options={validatorsOrOpts}
+        touched={touched}
+        hasError={hasError}
+        getError={getError}
+      >
+        <div className="invoer">
+          <WebMapView onChange={onLocationChange} />
+          {/* <MapContext>
           <MapInputComponent onChange={onLocationChange} value={value} mapOptions={mapOptions} hasGPSControl />
-        </MapContext>
-      </div>
-    </Header>
+        </MapContext> */}
+        </div>
+      </Header>
+    )
   );
 };
 

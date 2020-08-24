@@ -160,7 +160,9 @@ fieldset {
   flex-direction: column;
   height: 100vh;
 }
-
+.webmap{
+  height: 500px;
+}
 [aria-hidden="true"] {
   display: none !important;
 }

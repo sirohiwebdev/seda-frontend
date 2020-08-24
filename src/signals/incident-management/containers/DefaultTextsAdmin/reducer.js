@@ -3,8 +3,12 @@ import { fromJS } from 'immutable';
 import { defaultTextsOptionList } from 'signals/incident-management/definitions/statusList';
 
 import {
-  FETCH_DEFAULT_TEXTS, FETCH_DEFAULT_TEXTS_SUCCESS, FETCH_DEFAULT_TEXTS_ERROR,
-  STORE_DEFAULT_TEXTS, STORE_DEFAULT_TEXTS_SUCCESS, STORE_DEFAULT_TEXTS_ERROR,
+  FETCH_DEFAULT_TEXTS,
+  FETCH_DEFAULT_TEXTS_SUCCESS,
+  FETCH_DEFAULT_TEXTS_ERROR,
+  STORE_DEFAULT_TEXTS,
+  STORE_DEFAULT_TEXTS_SUCCESS,
+  STORE_DEFAULT_TEXTS_ERROR,
   ORDER_DEFAULT_TEXTS,
 } from './constants';
 
@@ -29,38 +33,25 @@ function defaultTextsAdminReducer(state = initialState, action) {
         .set('error', false);
 
     case FETCH_DEFAULT_TEXTS_SUCCESS:
-      return state
-        .set('defaultTexts', fromJS(action.payload))
-        .set('loading', false)
-        .set('error', false);
+      return state.set('defaultTexts', fromJS(action.payload)).set('loading', false).set('error', false);
 
     case FETCH_DEFAULT_TEXTS_ERROR:
-      return state
-        .set('loading', false)
-        .set('error', true);
+      return state.set('loading', false).set('error', true);
 
     case STORE_DEFAULT_TEXTS:
-      return state
-        .set('storing', true)
-        .set('error', false);
+      return state.set('storing', true).set('error', false);
 
     case STORE_DEFAULT_TEXTS_SUCCESS:
-      return state
-        .set('defaultTexts', fromJS(action.payload))
-        .set('storing', false)
-        .set('error', false);
+      return state.set('defaultTexts', fromJS(action.payload)).set('storing', false).set('error', false);
 
     case STORE_DEFAULT_TEXTS_ERROR:
-      return state
-        .set('storing', false)
-        .set('error', true);
+      return state.set('storing', false).set('error', true);
 
     case ORDER_DEFAULT_TEXTS:
       defaultTexts = state.get('defaultTexts').toJS();
       delta = action.payload.type === 'up' ? -1 : 1;
       defaultTexts.splice(action.payload.index + delta, 0, defaultTexts.splice(action.payload.index, 1)[0]);
-      return state
-        .set('defaultTexts', fromJS([...defaultTexts]));
+      return state.set('defaultTexts', fromJS([...defaultTexts]));
 
     default:
       return state;

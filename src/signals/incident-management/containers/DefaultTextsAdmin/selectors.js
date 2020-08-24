@@ -9,14 +9,10 @@ const selectDefaultTextsAdminDomain = state => state.get('defaultTextsAdmin');
  * Other specific selectors
  */
 
-
 /**
  * Default selector used by DefaultTextsAdmin
  */
 
-const makeSelectDefaultTextsAdmin = () => createSelector(
-  selectDefaultTextsAdminDomain,
-  substate => substate.toJS()
-);
+const makeSelectDefaultTextsAdmin = () => createSelector(selectDefaultTextsAdminDomain, substate => substate.toJS());
 
 export default makeSelectDefaultTextsAdmin;

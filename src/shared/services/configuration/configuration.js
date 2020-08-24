@@ -55,16 +55,16 @@ const applicationConfig = {
     },
   },
   map: {
-    municipality: 'amsterdam',
+    municipality: 'Hague',
     options: {
-      center: [52.3731081, 4.8932945],
+      center: [4.369786, 52.0715712],
       maxBounds: [
-        [52.25168, 4.64034],
-        [52.50536, 5.10737],
+        [4.269786, 51.9715712],
+        [4.469786, 52.1715712],
       ],
       maxZoom: 14,
       minZoom: 8,
-      zoom: 10,
+      zoom: 12,
     },
     optionsBackOffice: {
       maxZoom: 16,
@@ -111,6 +111,7 @@ const applicationConfig = {
   SEARCH_ENDPOINT: 'http://ec2-52-200-189-81.compute-1.amazonaws.com:8000/signals/v1/private/search',
   TERMS_ENDPOINT: 'http://ec2-52-200-189-81.compute-1.amazonaws.com:8000/signals/v1/private/terms/categories/',
   USERS_ENDPOINT: 'http://ec2-52-200-189-81.compute-1.amazonaws.com:8000/signals/v1/private/users/',
+  GEOCODE_SERVICE_ENDPOINT: 'http://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/reverseGeocode?f=json',
   default: 'Testing',
 };
 
