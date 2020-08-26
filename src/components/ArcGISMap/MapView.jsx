@@ -9,7 +9,7 @@ const options = {
   css: true,
 };
 
-export const WebMapView = ({ data, isShowPopup = false }) => {
+export const WebMapView = ({ data, onChange, isShowPopup }) => {
   const mapRef = useRef();
   const [location, setLocation] = useState(null);
 
@@ -218,7 +218,7 @@ export const WebMapView = ({ data, isShowPopup = false }) => {
 
   useEffect(() => {
     console.log(location);
-    location && props.onChange(location);
+    location && onChange(location);
   }, [location]);
 
   return (

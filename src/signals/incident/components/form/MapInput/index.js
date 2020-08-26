@@ -34,7 +34,7 @@ const MapInput = ({ handler, touched, hasError, meta, parent, getError, validato
         getError={getError}
       >
         <div className="invoer">
-          <WebMapView onChange={onLocationChange} />
+          <WebMapView onChange={onLocationChange} isShowPopup />
           {/* <MapContext>
           <MapInputComponent onChange={onLocationChange} value={value} mapOptions={mapOptions} hasGPSControl />
         </MapContext> */}
