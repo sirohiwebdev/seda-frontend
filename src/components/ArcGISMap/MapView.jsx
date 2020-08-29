@@ -1,11 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
+import PropTypes from 'prop-types';
 import { loadModules, setDefaultOptions } from 'esri-loader';
 import CONFIGURATION from '../../shared/services/configuration/configuration';
 import { getStadsdeel } from '../MapInput/services/reverseGeocoderService';
 
 setDefaultOptions({ css: true });
 const options = {
-  // url: 'https://js.arcgis.com/4.6/',
   css: true,
 };
 
@@ -13,21 +13,19 @@ export const WebMapView = ({ data, onChange, isShowPopup }) => {
   const mapRef = useRef();
   const [location, setLocation] = useState(null);
 
-  console.log(data);
+  // console.log(data);
 
   useEffect(() => {
     // lazy load the required ArcGIS API for JavaScript modules and CSS
 
-    let points = data
-      ? data.features.map(p => {
-          return {
-            type: p.geometry.type.toLowerCase(),
-            longitude: p.geometry.coordinates[0],
-            latitude: p.geometry.coordinates[1],
-            id: p.properties.id,
-            created_at: p.properties.created_at,
-          };
-        })
+    const points = data
+      ? data.features.map(p => ({
+        type: p.geometry.type.toLowerCase(),
+        longitude: p.geometry.coordinates[0],
+        latitude: p.geometry.coordinates[1],
+        id: p.properties.id,
+        created_at: p.properties.created_at,
+      }))
       : [];
 
     loadModules(
@@ -38,10 +36,9 @@ export const WebMapView = ({ data, onChange, isShowPopup }) => {
         'esri/Graphic',
         'esri/layers/GraphicsLayer',
         'esri/symbols/TextSymbol',
-        'esri/widgets/Locate',
       ],
       options
-    ).then(([ArcGISMap, MapView, Search, Graphic, GraphicsLayer, Locate]) => {
+    ).then(([ArcGISMap, MapView, Search, Graphic, GraphicsLayer]) => {
       const map = new ArcGISMap({
         basemap: 'topo-vector',
       });
@@ -49,54 +46,22 @@ export const WebMapView = ({ data, onChange, isShowPopup }) => {
       // load the map view at the ref's DOM node
       const view = new MapView({
         container: mapRef.current,
-        map: map,
+        map,
         center: CONFIGURATION.map.options.center,
         zoom: CONFIGURATION.map.options.zoom,
       });
 
-      // const textSymbol2D = new TextSymbol({
-      //   color: '#7A003C',
-      //   text: '\ue61d', // esri-icon-map-pin
-      //   font: {
-      //     // autocast as new Font()
-      //     size: 24,
-      //     family: 'CalciteWebCoreIcons',
-      //   },
-      // });
-
-      // const textSymbol3D = new TextSymbol({
-      //   color: '#7A003C',
-      //   text: '\ue61d', // esri-icon-map-pin
-      //   font: {
-      //     // autocast as new Font()
-      //     size: 24,
-      //     family: 'CalciteWebCoreIcons',
-      //   },
-      // });
-
-      // const locateWidget = new Locate({
-      //   view: view, // Attaches the Locate button to the view
-      //   // graphic: new Graphic({
-      //   //   symbol: { type: 'simple-marker' }, // overwrites the default symbol used for the
-      //   //   // graphic placed at the location of the user when found
-      //   // }),
-      // });
-
-      // console.log(locateWidget);
-
       const search = new Search({
-        view: view,
+        view,
       });
       view.ui.add(search, 'top-left');
       view.ui.move('zoom', 'bottom-right');
-      // view.ui.add('compass', 'top-left');
-      // view.ui.add(locateWidget, 'bottom-right');
 
-      var graphicsLayer = new GraphicsLayer();
+      const graphicsLayer = new GraphicsLayer();
       map.add(graphicsLayer);
 
       const getAddressFromLocation = async point => {
-        let { longitude, latitude } = point;
+        const { longitude, latitude } = point;
 
         let res = await fetch(`${CONFIGURATION.GEOCODE_SERVICE_ENDPOINT}&location=${longitude},${latitude}`);
 
@@ -112,15 +77,16 @@ export const WebMapView = ({ data, onChange, isShowPopup }) => {
         const stadsdeel =
           CONFIGURATION?.map?.options?.stadsdeel || (await getStadsdeel({ lat: latitude, lng: longitude }));
 
-        return await {
+        return{
           ...res.address,
           stadsdeel,
         };
       };
 
       search.on('select-result', function (res) {
-        console.log(res);
-        let geometry = res.result.feature.geometry;
+        // console.log(res);
+        const geometry = res.result.feature.geometry;
+        addPointToMap(geometry);
 
         getAddressFromLocation(geometry).then(address => {
           if (address) {
@@ -145,6 +111,9 @@ export const WebMapView = ({ data, onChange, isShowPopup }) => {
       view.on('click', function (evt) {
         search.clear();
         view.popup.clear();
+        graphicsLayer.removeAll();
+        addPointToMap(evt.mapPoint);
+
         getAddressFromLocation(evt.mapPoint).then(address => {
           if (address) {
             setLocation({
@@ -165,65 +134,96 @@ export const WebMapView = ({ data, onChange, isShowPopup }) => {
         });
       });
 
+
+      /**
+       *
+       * @param address
+       * @param pt
+       */
+
       function showPopup(address, pt) {
         const content = Object.keys(address)
           .filter(key => !!address[key])
-          .map(key => `<strong>${key}</strong>: ${address[key]}`)
-          .reduce((x, y) => x.concat('<br/>').concat(y), '');
+          .filter(key => key === 'Address' || key === 'City' || key === "Postal" || key === 'Region' || key==="CountryCode")
+          .map(key => `${address[key]}`)
+          .join(', ');
 
-        isShowPopup &&
+
+
+        if(isShowPopup) {
           view.popup.open({
             title: address.Address,
-            // title: +Math.round(pt.longitude * 100000) / 100000 + ',' + Math.round(pt.latitude * 100000) / 100000,
             content,
             location: pt,
           });
+        }
       }
 
-      function addPointToMap(points) {
-        points.forEach(({ type, longitude, latitude }) => {
-          let point = {
-            type,
-            longitude,
-            latitude,
-          };
+      function addPointToMap(mapPoint) {
+        const simpleMarkerSymbol = {
+          type: 'picture-marker',
+          url: '/assets/map-marker.svg',
+          width: '30px',
+          height: '32px',
+        };
 
-          var simpleMarkerSymbol = {
-            type: 'picture-marker',
-            url: '/assets/map-marker.svg',
-            width: '30px',
-            height: '32px',
-          };
+        if(Array.isArray(mapPoint)){
+          mapPoint.forEach(({ type, longitude, latitude }) => {
+            const point = {
+              type,
+              longitude,
+              latitude,
+            };
 
-          var pointGraphic = new Graphic({
-            geometry: point,
+            const pointGraphic = new Graphic({
+              geometry: point,
+              symbol: simpleMarkerSymbol,
+            });
+
+            graphicsLayer.add(pointGraphic);
+          });
+        }else{
+          // Add single Point
+          const { type, longitude, latitude } = mapPoint ;
+          const pointGraphic = new Graphic({
+            geometry: {
+              type,
+              latitude,
+              longitude,
+            },
             symbol: simpleMarkerSymbol,
           });
 
           graphicsLayer.add(pointGraphic);
-        });
+        }
       }
 
+      // eslint-disable-next-line no-unused-expressions
       points && addPointToMap(points);
 
       return () => {
         if (view) {
-          // destroy the map view
           view.container = null;
         }
       };
-      //End Map Block
     });
-  }, [data]);
+  }, [data, isShowPopup]);
 
   useEffect(() => {
-    console.log(location);
-    location && onChange(location);
-  }, [location]);
+    // eslint-disable-next-line no-unused-expressions
+    location &&  onChange(location);
+  }, [location, onChange]);
 
   return (
     <div>
-      <div className="webmap" ref={mapRef} />
+      <div className="web-map" ref={mapRef} />
     </div>
   );
+};
+
+WebMapView.propTypes = {
+  data: PropTypes.array,
+  onChange: PropTypes.func.isRequired,
+  isShowPopup: PropTypes.bool,
+
 };
