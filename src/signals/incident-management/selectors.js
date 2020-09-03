@@ -1,7 +1,10 @@
 import { fromJS } from 'immutable';
 
 import { parseInputFormData } from 'signals/shared/filter/parse';
-import { makeSelectMainCategories, makeSelectSubCategories } from 'models/categories/selectors';
+import {
+  makeSelectFilterCategories,
+
+} from 'models/categories/selectors';
 
 import { createSelector } from 'reselect';
 import { initialState } from './reducer';
@@ -13,7 +16,7 @@ import { FILTER_PAGE_SIZE } from './constants';
 const selectIncidentManagementDomain = state => (state && state.get('incidentManagement')) || fromJS(initialState);
 
 export const makeSelectAllFilters = createSelector(
-  [selectIncidentManagementDomain, makeSelectMainCategories, makeSelectSubCategories],
+  [selectIncidentManagementDomain, makeSelectFilterCategories, makeSelectFilterCategories],
   (stateMap, maincategory_slug, category_slug) => {
     const filters = stateMap.get('filters').toJS();
 
@@ -37,7 +40,7 @@ export const makeSelectAllFilters = createSelector(
 );
 
 export const makeSelectActiveFilter = createSelector(
-  [selectIncidentManagementDomain, makeSelectMainCategories, makeSelectSubCategories],
+  [selectIncidentManagementDomain, makeSelectFilterCategories, makeSelectFilterCategories],
   (stateMap, maincategory_slug, category_slug) => {
     if (!(maincategory_slug && category_slug)) {
       return {};
@@ -63,7 +66,7 @@ export const makeSelectActiveFilter = createSelector(
 );
 
 export const makeSelectEditFilter = createSelector(
-  [selectIncidentManagementDomain, makeSelectMainCategories, makeSelectSubCategories],
+  [selectIncidentManagementDomain, makeSelectFilterCategories, makeSelectFilterCategories],
   (stateMap, maincategory_slug, category_slug) => {
     if (!(maincategory_slug && category_slug)) {
       return {};
@@ -107,7 +110,13 @@ export const makeSelectFilterParams = createSelector(selectIncidentManagementDom
     page_size: FILTER_PAGE_SIZE,
   };
 
-  return { ...options, ...pagingOptions };
+
+  // mapping category_slug as a category_filter_label because we are using filter label fo categories
+  const { category_slug, ...rest } = options;
+  const category_filter_label = category_slug;
+
+
+  return { ...rest, category_filter_label,  ...pagingOptions };
 });
 
 export const makeSelectPage = createSelector(selectIncidentManagementDomain, state => {

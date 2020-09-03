@@ -118,16 +118,8 @@ export default (state, action) => {
         ...state,
         options: {
           ...state.options,
-          category_slug: state.options.category_slug.filter(
-            ({ _links }) =>
-              _links['sia:parent'].public.endsWith(
-                action.payload.category.slug
-              ) === false
-          ),
-          maincategory_slug: state.options.maincategory_slug
-            .filter(({ slug }) => slug !== action.payload.category.slug)
-            .concat(action.payload.isToggled && action.payload.category)
-            .filter(Boolean),
+          category_slug: [],
+          maincategory_slug: action.payload.isToggled ? action.payload.category: [],
         },
       };
 
@@ -136,18 +128,8 @@ export default (state, action) => {
         ...state,
         options: {
           ...state.options,
-          category_slug: state.options.category_slug
-            .filter(
-              ({ _links }) =>
-                _links['sia:parent'].public.endsWith(action.payload.slug) ===
-                false
-            )
-            .concat(action.payload.subCategories)
-            .filter(Boolean),
-          maincategory_slug: state.options.maincategory_slug.filter(
-            ({ _links }) =>
-              _links.self.public.endsWith(action.payload.slug) === false
-          ),
+          category_slug: action.payload.subCategories,
+          maincategory_slug: [],
         },
       };
 

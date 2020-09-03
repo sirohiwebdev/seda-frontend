@@ -30,7 +30,7 @@ export const Form = styled.form`
     grid-column-gap: ${themeSpacing(5)};
 
     ${({ isSummary }) =>
-      isSummary &&
+    isSummary &&
       css`
         grid-template-columns: 4fr 6fr;
 
@@ -39,7 +39,7 @@ export const Form = styled.form`
         }
 
         ${() =>
-          isSummary &&
+    isSummary &&
           isAuthenticated() &&
           css`
             @media (min-width: ${({ theme }) => theme.layouts.large.min}px) {
@@ -140,7 +140,6 @@ class IncidentForm extends React.Component {
   }
 
   setIncident(formAction) {
-    console.log(this.form.value);
     switch (
       formAction // eslint-disable-line default-case
     ) {
@@ -153,6 +152,9 @@ class IncidentForm extends React.Component {
           incident: this.props.incidentContainer.incident,
           wizard: this.props.wizard,
         });
+        break;
+      default:
+        break;
     }
   }
 

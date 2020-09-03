@@ -45,7 +45,6 @@ class FieldControlWrapper extends React.Component {
   render() {
     const { name, control, render, meta, parent, ...props } = this.props;
 
-    // console.log('v', this.state.values);
 
     return (
       <FieldControlContainer>

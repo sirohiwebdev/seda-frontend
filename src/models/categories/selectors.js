@@ -49,7 +49,6 @@ export const makeSelectAllCategories = createSelector(selectCategoriesDomain, st
   if (!results) {
     return null;
   }
-
   return mappedSequence(results);
 });
 
@@ -74,9 +73,7 @@ export const filterForSub = ({ _links }) => _links['sia:parent'] !== undefined;
 
 const getHasParent = state =>
   state.filter(
-    // category => category.getIn(['_links', 'sia:parent']) !== undefined
-    category => true
-  );
+    category => category.getIn(['_links', 'sia:parent']) !== undefined);
 
 /**
  * Get all subcategories, sorted by name, excluding inactive subcategories
@@ -97,13 +94,13 @@ export const makeSelectSubCategories = createSelector(makeSelectCategories, stat
     let extendedName = subCategory.name;
 
     if (subCategory.category_level_name2) {
-      extendedName += '-' + subCategory.category_level_name2;
+      extendedName += `-${  subCategory.category_level_name2}`;
     }
     if (subCategory.category_level_name3) {
-      extendedName += '-' + subCategory.category_level_name3;
+      extendedName += `-${  subCategory.category_level_name3}`;
     }
     if (subCategory.category_level_name4) {
-      extendedName += '-' + subCategory.category_level_name4;
+      extendedName += `-${  subCategory.category_level_name4}`;
     }
 
     if (responsibleDeptCodes.length > 0) {
@@ -139,24 +136,18 @@ export const makeSelectByMainCategory = createSelector(makeSelectSubCategories, 
   return state.filter(category => category.parentKey === parentKey);
 });
 
-/**
- * Get all subcategories, grouped by main category. Both main and subcategories are sorted by name.
- *
- * @returns {Object}
- */
-export const makeSelectStructuredCategories = createSelector(
-  [makeSelectMainCategories, makeSelectByMainCategory],
-  (main, byMain) => {
-    if (!main) {
-      return null;
+export const makeSelectFilterCategories = createSelector(
+  [makeSelectAllCategories],
+  state =>{
+    if(!state){
+      return  null;
     }
 
-    return main.reduce(
-      (acc, mainCategory) => ({
-        ...acc,
-        [mainCategory.slug]: { ...mainCategory, sub: byMain(mainCategory.key) },
-      }),
-      {}
-    );
-  }
-);
+    return state.toJS().map(category => ({
+      ...category,
+      name: category.filter_label,
+      key: category.fk,
+      id: `${category.fk}`,
+      value: category.filter_label,
+    }));
+  });

@@ -1,14 +1,6 @@
-/*New
-Pending treatment
-In the case of the party
-Scheduled
-Handled
-Rejected
-More information desired
-Reopened
-Split"
+/*
 
-*/
+
 const NEW = {
   key: 'n',
   value: 'New',
@@ -84,8 +76,9 @@ export const defaultTextsOptionList = [
   SPLIT,
   PENDING_TREATMENT,
 ];
+*/
 
-/*
+
 
 const GEMELD = {
   key: 'm',
@@ -198,4 +191,4 @@ export const changeStatusOptionList = [
 
 export const defaultTextsOptionList = [AFGEHANDELD, INGEPLAND, HEROPEND];
 
-*/
+

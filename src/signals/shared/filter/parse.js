@@ -32,7 +32,7 @@ export const parseOutputFormData = options =>
     switch (key) {
       case 'category_slug':
       case 'maincategory_slug':
-        entryValue = value.map(({ slug }) => slug);
+        entryValue = value.map(({ name }) => name);
         break;
 
       case 'contact_details':
@@ -84,7 +84,7 @@ export const parseInputFormData = (filterData, fixtureData = {}) => {
       .filter(fieldName => arrayFields.includes(fieldName))
       .forEach(fieldName => {
         options[fieldName] = options[fieldName]
-          .map(value => fields[fieldName] && fields[fieldName].find(({ key, slug }) => key === value || slug === value))
+          .map(value => fields[fieldName] && fields[fieldName].find(({ key, slug, name }) => name === value || key === value || slug === value))
           .filter(Boolean);
       });
   }
@@ -101,7 +101,7 @@ export const parseToAPIData = filterData => {
   Object.keys(options)
     .filter(fieldName => arrayFields.includes(fieldName))
     .forEach(fieldName => {
-      options[fieldName] = options[fieldName].map(({ slug, key }) => slug || key);
+      options[fieldName] = options[fieldName].map(({ slug, key, name }) => name || slug || key);
     });
 
   return { ...filterData, options };

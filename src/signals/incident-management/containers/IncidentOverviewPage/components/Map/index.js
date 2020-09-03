@@ -6,69 +6,68 @@ import isEqual from 'lodash.isequal';
 import format from 'date-fns/format';
 import subDays from 'date-fns/addDays';
 import L from 'leaflet';
-import { ViewerContainer, themeColor, themeSpacing } from '@datapunt/asc-ui';
+// import { ViewerContainer, themeColor, themeSpacing } from '@datapunt/asc-ui';
 
 import MapContext from 'containers/MapContext/context';
 import { setAddressAction } from 'containers/MapContext/actions';
-import MAP_OPTIONS from 'shared/services/configuration/map-options';
 import configuration from 'shared/services/configuration/configuration';
-import { featureTolocation, formatPDOKResponse } from 'shared/services/map-location';
+import { featureTolocation } from 'shared/services/map-location';
 import { makeSelectFilterParams, makeSelectActiveFilter } from 'signals/incident-management/selectors';
 import { initialState } from 'signals/incident-management/reducer';
 import useFetch from 'hooks/useFetch';
 import { incidentIcon, markerIcon } from 'shared/services/configuration/map-markers';
-import Map from 'components/Map';
-import PDOKAutoSuggest from 'components/PDOKAutoSuggest';
-import MarkerCluster from './components/MarkerCluster';
-
-import DetailPanel from './components/DetailPanel';
+// import Map from 'components/Map';
+// import PDOKAutoSuggest from 'components/PDOKAutoSuggest';
 import { WebMapView } from 'components/ArcGISMap/MapView';
 
-const StyledViewerContainer = styled(ViewerContainer)`
-  flex-direction: row;
 
-  & > * {
-    left: ${themeSpacing(4)};
-    right: ${themeSpacing(4)};
-  }
-`;
+
+// const StyledViewerContainer = styled(ViewerContainer)`
+//   flex-direction: row;
+//
+//   & > * {
+//     left: ${themeSpacing(4)};
+//     right: ${themeSpacing(4)};
+//   }
+// `;
 
 const Wrapper = styled.div`
   position: relative;
   width: 100%;
 `;
 
-const StyledMap = styled(Map)`
-  height: 600px;
-  width: 100%;
+// const StyledMap = styled(Map)`
+//   height: 600px;
+//   width: 100%;
+//
+//   .marker-cluster {
+//     color: ${themeColor('tint', 'level1')};
+//     background-color: ${themeColor('tint', 'level1')};
+//     box-shadow: 1px 1px 1px #666666;
+//
+//     div {
+//       width: 32px;
+//       height: 32px;
+//       margin-top: 4px;
+//       margin-left: 4px;
+//       background-color: #004699;
+//     }
+//
+//     span {
+//       line-height: 34px;
+//     }
+//   }
+// `;
 
-  .marker-cluster {
-    color: ${themeColor('tint', 'level1')};
-    background-color: ${themeColor('tint', 'level1')};
-    box-shadow: 1px 1px 1px #666666;
+// const Autosuggest = styled(PDOKAutoSuggest)`
+//   max-width: calc(100% - 40px);
+//   z-index: 401; // 400 is the minimum elevation were elements are shown above the map
+//   width: 350px;
+//   left: 0;
+//   position: absolute;
+// `;
 
-    div {
-      width: 32px;
-      height: 32px;
-      margin-top: 4px;
-      margin-left: 4px;
-      background-color: #004699;
-    }
-
-    span {
-      line-height: 34px;
-    }
-  }
-`;
-
-const Autosuggest = styled(PDOKAutoSuggest)`
-  max-width: calc(100% - 40px);
-  z-index: 401; // 400 is the minimum elevation were elements are shown above the map
-  width: 350px;
-  left: 0;
-  position: absolute;
-`;
-
+/**
 const clusterLayerOptions = {
   showCoverageOnHover: false,
   zoomToBoundsOnClick: true,
@@ -92,16 +91,21 @@ const clusterLayerOptions = {
     });
   },
 };
+ */
 
 const OverviewMap = ({ showPanelOnInit, ...rest }) => {
   const { dispatch } = useContext(MapContext);
   const [initialMount, setInitialMount] = useState(false);
+  // eslint-disable-next-line no-unused-vars
   const [showPanel, setShowPanel] = useState(showPanelOnInit);
+  // eslint-disable-next-line no-unused-vars
   const [map, setMap] = useState();
   const { options } = useSelector(makeSelectActiveFilter);
   const filterParams = useSelector(makeSelectFilterParams);
   const { get, data, isLoading } = useFetch();
+  // eslint-disable-next-line no-unused-vars
   const [layerInstance, setLayerInstance] = useState();
+  // eslint-disable-next-line no-unused-vars
   const [incidentId, setIncidentId] = useState(0);
 
   const { ...params } = filterParams;
@@ -118,6 +122,8 @@ const OverviewMap = ({ showPanelOnInit, ...rest }) => {
    *
    * Note that testing this functionality resembles integration testing, hence disabling istanbul coverage
    */
+
+  // eslint-disable-next-line no-unused-vars
   const onSelect = useCallback(
     /* istanbul ignore next */ option => {
       dispatch(setAddressAction(option.value));
@@ -138,6 +144,7 @@ const OverviewMap = ({ showPanelOnInit, ...rest }) => {
     });
   }, [map]);
 
+  // eslint-disable-next-line no-unused-vars
   const onClosePanel = useCallback(() => {
     setShowPanel(false);
     resetMarkerIcons();
@@ -199,6 +206,7 @@ const OverviewMap = ({ showPanelOnInit, ...rest }) => {
     <Wrapper {...rest}>
       <WebMapView onChange={() => {}} data={data} />
 
+
       {/* <StyledMap
         data-testid="overviewMap"
         hasZoomControls
@@ -208,6 +216,7 @@ const OverviewMap = ({ showPanelOnInit, ...rest }) => {
         }}
         setInstance={setMap}
       >
+
         <MarkerCluster clusterOptions={clusterLayerOptions} setInstance={setLayerInstance} />
         <StyledViewerContainer
           topLeft={
@@ -221,7 +230,8 @@ const OverviewMap = ({ showPanelOnInit, ...rest }) => {
           }
           topRight={showPanel && <DetailPanel incidentId={incidentId} onClose={onClosePanel} />}
         />
-      </StyledMap> */}
+      </StyledMap>
+      */}
     </Wrapper>
   );
 };

@@ -16,12 +16,12 @@ import {
 
 export function* fetchDefaultTexts(action) {
   try {
-    const payload = action.payload;
+    const { category, state } = action.payload;
     const result = yield call(
       authCall,
-      `${CONFIGURATION.TERMS_ENDPOINT}${payload.main_slug}/sub_categories/${payload.sub_slug}/status-message-templates`
+      `${CONFIGURATION.TERMS_ENDPOINT}${category}/status-message-templates`
     );
-    const found = result.find(item => item.state === payload.state);
+    const found = result.find(item => item.state === state);
     yield put(fetchDefaultTextsSuccess(found?.templates || []));
   } catch (error) {
     yield put(fetchDefaultTextsError(error));
@@ -42,27 +42,27 @@ export function* fetchDefaultTexts(action) {
 export function* storeDefaultTexts(action) {
   try {
     const payload = action.payload;
-    const { subcategory } = payload;
+
+    const { category } = payload;
     const result = yield call(
       authPostCall,
-      `${CONFIGURATION.TERMS_ENDPOINT}${payload.main_slug}/sub_categories/${payload.subcategory.slug}/status-message-templates`,
+      `${CONFIGURATION.TERMS_ENDPOINT}${category}/status-message-templates`,
       [payload.post]
     );
 
+
     const found = result.find(item => item?.state === payload.post.state);
-
     yield put(storeDefaultTextsSuccess(found?.templates || []));
-
     const numStoredTemplates = found?.templates?.length || 0;
-
     yield put(
       showGlobalNotification({
-        title: `${numStoredTemplates} Standaard tekst${numStoredTemplates === 0 || numStoredTemplates > 1 ? 'en' : ''} opgeslagen voor ${subcategory.value}, ${payload.status.value}`,
+        title: `${numStoredTemplates} Standaard tekst${numStoredTemplates === 0 || numStoredTemplates > 1 ? 'en' : ''} opgeslagen voor ${category}, ${payload.post.state}`,
         variant: VARIANT_SUCCESS,
         type: TYPE_LOCAL,
       })
     );
-  } catch (error) {
+  }
+  catch (error) {
     yield put(storeDefaultTextsError(error));
 
     yield put(

@@ -207,7 +207,7 @@ const MetaList = ({ incident, onEditStatus }) => {
       </Highlight>
 
       {subcategoryOptions && (
-        <>
+        <React.Fragment>
           <Highlight subscribeTo={incident.category.sub_slug} valueChanged={valueChanged}>
             <h3>Categories (Text)</h3>
             <ChangeValue
@@ -269,7 +269,7 @@ const MetaList = ({ incident, onEditStatus }) => {
               valuePath="category.category_url"
             />
           </Highlight>
-        </>
+        </React.Fragment>
       )}
     </List>
   );

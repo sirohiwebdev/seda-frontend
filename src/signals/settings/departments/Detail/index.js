@@ -7,9 +7,8 @@ import { compose } from 'redux';
 import { Row, Column, Heading, Paragraph } from '@datapunt/asc-ui';
 
 import {
-  makeSelectStructuredCategories,
   makeSelectByMainCategory,
-  makeSelectSubCategories,
+  makeSelectSubCategories, makeSelectFilterCategories,
 } from 'models/categories/selectors';
 import PageHeader from 'signals/settings/components/PageHeader';
 import LoadingIndicator from 'shared/components/LoadingIndicator';
@@ -108,7 +107,7 @@ DepartmentDetailContainer.propTypes = {
 
 const mapStateToProps = () =>
   createStructuredSelector({
-    categories: makeSelectStructuredCategories,
+    categories: makeSelectFilterCategories,
     findByMain: makeSelectByMainCategory,
     subCategories: makeSelectSubCategories,
   });

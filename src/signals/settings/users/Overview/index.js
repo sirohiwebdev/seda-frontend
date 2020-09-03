@@ -113,7 +113,6 @@ const UsersOverviewContainer = () => {
     [dispatch]
   );
 
-  console.log(data);
 
   const onItemClick = useCallback(
     event => {

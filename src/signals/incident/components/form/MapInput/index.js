@@ -1,17 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import MapInputComponent from 'components/MapInput';
-import MapContext from 'containers/MapContext';
-
 import MAP_OPTIONS from 'shared/services/configuration/map-options';
 import { formatMapLocation } from 'shared/services/map-location';
-import Header from '../Header';
 import { WebMapView } from 'components/ArcGISMap/MapView';
+import Header from '../Header';
 
 const MapInput = ({ handler, touched, hasError, meta, parent, getError, validatorsOrOpts }) => {
   const value = formatMapLocation(handler().value || {});
   const { lat, lng } = value?.location || {};
+  // eslint-disable-next-line no-unused-vars
   const mapOptions = {
     ...MAP_OPTIONS,
     center: lat && lng ? [lat, lng] : [...MAP_OPTIONS.center],
@@ -19,7 +17,6 @@ const MapInput = ({ handler, touched, hasError, meta, parent, getError, validato
 
   // Can't use useCallback here, would break the rules of hooks
   const onLocationChange = location => {
-    console.log(location);
     parent.meta.updateIncident({ location });
   };
 

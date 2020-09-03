@@ -6,7 +6,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { useSelector } from 'react-redux';
 import { Label as AscLabel } from '@datapunt/asc-ui';
 
-import { makeSelectStructuredCategories } from 'models/categories/selectors';
+import { makeSelectFilterCategories } from 'models/categories/selectors';
 import dataLists from 'signals/incident-management/definitions';
 import { parseOutputFormData } from 'signals/shared/filter/parse';
 import * as types from 'shared/types';
@@ -41,14 +41,13 @@ import reducer, { init } from './reducer';
  * Component that renders the incident filter form
  */
 const FilterForm = ({ filter, onCancel, onClearFilter, onSaveFilter, onSubmit, onUpdateFilter }) => {
-  const categories = useSelector(makeSelectStructuredCategories);
+  const categories = useSelector(makeSelectFilterCategories);
 
   const [state, dispatch] = useReducer(reducer, filter, init);
 
   const isNewFilter = !filter.name;
 
   const initialFormState = useMemo(() => cloneDeep(init(filter)), [filter]);
-
   const currentState = useMemo(
     () => ({
       ...state.filter,
@@ -130,7 +129,7 @@ const FilterForm = ({ filter, onCancel, onClearFilter, onSaveFilter, onSubmit, o
     (slug, isToggled) => {
       dispatch(
         setMainCategory({
-          category: categories[slug],
+          category: categories,
           isToggled,
         })
       );

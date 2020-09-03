@@ -14,7 +14,6 @@ const filterData = (data, colMap) => {
     Object.keys(item)
       .filter(key => allowedKeys.includes(key))
       .reduce((rawObj, key) => {
-        console.log(key);
         const obj = { ...rawObj };
         let value = item[key];
 
@@ -22,8 +21,8 @@ const filterData = (data, colMap) => {
           value = value ? 'Actief' : 'Niet actief';
         }
 
-        if (key == 'profile') {
-          let dep = item[key].departments;
+        if (key === 'profile') {
+          const dep = item[key].departments;
           value = dep.join(',');
         }
 

@@ -5,35 +5,28 @@ import * as types from 'shared/types';
 import Label from 'components/Label';
 import CheckboxList from '../../CheckboxList';
 
-const CategoryGroups = ({ categories, filterSlugs, onChange, onToggle }) =>
-  Object.entries(categories).map(([slug, { name, sub, key }]) => {
-    const defaultValue = filterSlugs.filter(({ _links: { self }, id }) =>
-      new RegExp(`/terms/categories/${slug}`).test(self.public || id)
-    );
-
-    return (
-      <CheckboxList
-        defaultValue={defaultValue}
-        groupId={key}
-        groupName="maincategory_slug"
-        groupValue={slug}
-        hasToggle
-        key={slug}
-        name={`${slug}_category_slug`}
-        onChange={onChange}
-        onToggle={onToggle}
-        options={sub}
-        title={<Label as="span">{name}</Label>}
-      />
-    );
-  });
+const CategoryGroups = ({ categories, filterSlugs, onChange, onToggle }) => (
+  <CheckboxList
+    defaultValue={filterSlugs}
+    groupId="Category"
+    groupName="main-category"
+    groupValue="all"
+    hasToggle
+    key="main-category"
+    name="main_category_slug"
+    onChange={onChange}
+    onToggle={onToggle}
+    options={categories}
+    title={<Label as="span">Categorie</Label>}
+  />
+);
 
 CategoryGroups.defaultProps = {
   filterSlugs: [],
 };
 
 CategoryGroups.propTypes = {
-  categories: types.categoriesType.isRequired,
+  categories: PropTypes.array,
   filterSlugs: types.dataListType,
   onChange: PropTypes.func,
   onToggle: PropTypes.func,

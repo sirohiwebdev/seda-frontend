@@ -7,8 +7,7 @@ import parseISO from 'date-fns/parseISO';
 import format from 'date-fns/format';
 
 import {
-  makeSelectMainCategories,
-  makeSelectSubCategories,
+  makeSelectFilterCategories,
 } from 'models/categories/selectors';
 import dataLists from 'signals/incident-management/definitions';
 import * as types from 'shared/types';
@@ -142,8 +141,8 @@ FilterTagListComponent.defaultProps = {
 };
 
 const mapStateToProps = createStructuredSelector({
-  mainCategories: makeSelectMainCategories,
-  subCategories: makeSelectSubCategories,
+  mainCategories: makeSelectFilterCategories,
+  subCategories: makeSelectFilterCategories,
 });
 
 const withConnect = connect(mapStateToProps);

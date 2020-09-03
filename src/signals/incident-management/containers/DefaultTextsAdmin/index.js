@@ -31,7 +31,7 @@ export const DefaultTextsAdminContainer = ({
   onFetchDefaultTexts,
   onSubmitTexts,
   onOrderDefaultTexts,
-  defaultTextsAdmin: { defaultTexts, defaultTextsOptionList, categoryUrl, state },
+  defaultTextsAdmin: { defaultTexts, defaultTextsOptionList, category, state },
 }) => (
   <Fragment>
     <Row>
@@ -55,7 +55,7 @@ export const DefaultTextsAdminContainer = ({
         {subCategories && (
           <DefaultTextsForm
             defaultTexts={defaultTexts}
-            categoryUrl={categoryUrl}
+            categoryUrl={category}
             subCategories={subCategories}
             state={state}
             onSubmitTexts={onSubmitTexts}
@@ -71,9 +71,8 @@ DefaultTextsAdminContainer.defaultProps = {
   defaultTextsAdmin: {
     defaultTexts: [],
     defaultTextsOptionList: [],
-    categoryUrl:
-      'https://acc.api.data.amsterdam.nl/signals/v1/public/terms/categories/afval/sub_categories/asbest-accu',
-    state: 'o',
+    category: 'Afval/Afvalbakken/Afvalbak/Aanplak',
+    state: 'o', // status type
   },
 };
 
@@ -81,7 +80,7 @@ DefaultTextsAdminContainer.propTypes = {
   defaultTextsAdmin: PropTypes.shape({
     defaultTexts: defaultTextsType,
     defaultTextsOptionList: dataListType,
-    categoryUrl: PropTypes.string,
+    category: PropTypes.string,
     state: PropTypes.string,
   }),
   subCategories: dataListType,

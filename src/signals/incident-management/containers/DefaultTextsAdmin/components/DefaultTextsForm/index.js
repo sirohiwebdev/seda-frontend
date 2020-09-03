@@ -10,8 +10,6 @@ import FieldControlWrapper from 'signals/incident-management/components/FieldCon
 import TextInput from 'signals/incident-management/components/TextInput';
 import TextAreaInput from 'signals/incident-management/components/TextAreaInput';
 import HiddenInput from 'signals/incident-management/components/HiddenInput';
-import { reCategory } from 'shared/services/resolveClassification';
-import { statusList } from 'signals/incident-management/definitions';
 
 import { ChevronDown, ChevronUp } from '@datapunt/asc-assets';
 
@@ -54,7 +52,7 @@ const fields = [...new Array(DEFAULT_TEXT_FIELDS).keys()].reduce(
   {}
 );
 
-const DefaultTextsForm = ({ categoryUrl, state, defaultTexts, subCategories, onSubmitTexts, onOrderDefaultTexts }) => {
+const DefaultTextsForm = ({ categoryUrl, state, defaultTexts, onSubmitTexts, onOrderDefaultTexts }) => {
   const form = useMemo(() => FormBuilder.group(fields), []);
   const items = Object.keys(form.controls).slice(0, -2);
 
@@ -62,36 +60,36 @@ const DefaultTextsForm = ({ categoryUrl, state, defaultTexts, subCategories, onS
     e => {
       e.preventDefault();
 
-      const category = form.get('categoryUrl').value;
+      // const category = form.get('category').value;
       const payload = {
         post: {
-          state: form.get('state').value,
+          state,
           templates: [],
         },
       };
-      const found = subCategories.find(sub => sub?._links?.self?.public === category);
+      // const found = subCategories.find(sub => sub?._links?.self?.public === category);
+      //
+      // /* istanbul ignore else */
+      // if (found) {
+      //   const [, main_slug] = found._links.self.public.match(reCategory);
+      //   payload.main_slug = main_slug;
+      //   payload.status = statusList.find(({ key }) => key === form.get('state').value);
 
-      /* istanbul ignore else */
-      if (found) {
-        const [, main_slug] = found._links.self.public.match(reCategory);
-        payload.subcategory = found;
-        payload.main_slug = main_slug;
-        payload.status = statusList.find(({ key }) => key === form.get('state').value);
+      payload.category  = categoryUrl;
 
-        items.forEach(item => {
-          const data = form.get(item).value;
+      items.forEach(item => {
+        const data = form.get(item).value;
 
-          if (data.text && data.title) {
-            payload.post.templates.push({ ...data });
-          }
-        });
+        if (data.text && data.title) {
+          payload.post.templates.push({ ...data });
+        }
+      });
 
-        onSubmitTexts(payload);
-      }
+      onSubmitTexts(payload);
 
       form.updateValueAndValidity();
     },
-    [form, onSubmitTexts, subCategories, items]
+    [state, categoryUrl, items, onSubmitTexts, form]
   );
 
   const changeOrdering = useCallback(
@@ -131,7 +129,7 @@ const DefaultTextsForm = ({ categoryUrl, state, defaultTexts, subCategories, onS
         render={({ invalid }) => (
           <form data-testid="defaultTextFormForm" onSubmit={handleSubmit} className="default-texts-form__form">
             <FieldControlWrapper render={HiddenInput} name="state" control={form.get('state')} />
-            <FieldControlWrapper render={HiddenInput} name="categoryUrl" control={form.get('categoryUrl')} />
+            <FieldControlWrapper render={HiddenInput} name="category" control={form.get('categoryUrl')} />
 
             {items.map((item, index) => (
               <Fragment key={item}>
@@ -187,13 +185,14 @@ const DefaultTextsForm = ({ categoryUrl, state, defaultTexts, subCategories, onS
 
 DefaultTextsForm.defaultProps = {
   defaultTexts: [],
-  categoryUrl: '',
+  categoryUrl: 'Afval/Afvalbakken/Afvalbak/Aanplak',
   subCategories: [],
   state: '',
 };
 
 DefaultTextsForm.propTypes = {
   defaultTexts: defaultTextsType,
+  // eslint-disable-next-line react/no-unused-prop-types
   subCategories: dataListType,
   categoryUrl: PropTypes.string,
   state: PropTypes.string,

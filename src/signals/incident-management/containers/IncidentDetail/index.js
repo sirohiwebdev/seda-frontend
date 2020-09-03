@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { bindActionCreators, store } from 'redux';
+import { bindActionCreators } from 'redux';
 import isEqual from 'lodash.isequal';
 import { Row, Column } from '@datapunt/asc-ui';
 import styled from 'styled-components';
@@ -119,7 +119,6 @@ export class IncidentDetail extends React.Component {
   }
 
   render() {
-    console.log(this.props);
     const {
       match: {
         params: { id },

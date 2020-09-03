@@ -27,7 +27,7 @@ function defaultTextsAdminReducer(state = initialState, action) {
   switch (action.type) {
     case FETCH_DEFAULT_TEXTS:
       return state
-        .set('categoryUrl', fromJS(action.payload.category_url))
+        .set('category', fromJS(action.payload.category))
         .set('state', fromJS(action.payload.state))
         .set('loading', true)
         .set('error', false);

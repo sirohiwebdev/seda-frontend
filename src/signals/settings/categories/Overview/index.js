@@ -40,9 +40,6 @@ export const CategoriesOverviewContainer = ({ subCategories, userCan }) => {
   const history = useHistory();
   const params = useParams();
   const [page, setPage] = useState(1);
-
-  console.log('SUB', subCategories);
-
   const pageNum = params.pageNum && parseInt(params.pageNum, 10);
   const count = subCategories && subCategories.length;
   const sliceStart = (pageNum - 1) * PAGE_SIZE;
@@ -50,8 +47,6 @@ export const CategoriesOverviewContainer = ({ subCategories, userCan }) => {
     ...category,
     sla: `${category.sla.n_days} ${!category.sla.use_calendar_days ? 'werk' : ''}dagen`,
   }));
-
-  console.log('PAGED', pagedData);
 
   const data = filterData(pagedData, colMap);
   const isLoading = !subCategories;
@@ -93,7 +88,6 @@ export const CategoriesOverviewContainer = ({ subCategories, userCan }) => {
 
   const columnHeaders = ['Category Level 1', 'Category Level 2', 'Category Level 3', 'Category Level 4', 'Status'];
 
-  console.log(data);
 
   return (
     <Fragment>
