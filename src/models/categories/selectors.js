@@ -72,8 +72,8 @@ export const makeSelectMainCategories = createSelector(makeSelectCategories, sta
 export const filterForSub = ({ _links }) => _links['sia:parent'] !== undefined;
 
 const getHasParent = state =>
-  state.filter(
-    category => category.getIn(['_links', 'sia:parent']) !== undefined);
+  state.filter(Boolean);
+// category => category.getIn(['_links', 'sia:parent']) !== undefined);
 
 /**
  * Get all subcategories, sorted by name, excluding inactive subcategories
